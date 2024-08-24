@@ -15,18 +15,21 @@ export type ScrumAIDetails = {
   numOfSprints: string;
   lenOfSprints: string;
   people: Person[];
-}
-export default function InputPage( { onSubmit }: { onSubmit: ScrumAIDetails }) {
-  
-  const [task, setTask] = useState('');
-  const [desc, setDesc] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [numOfSprints, setNumOfSprints] = useState('');
-  const [lenOfSprints, setLenOfSprints] = useState('');
+};
+export default function InputPage({
+  onSubmit,
+}: {
+  onSubmit: (d: ScrumAIDetails) => void;
+}) {
+  const [task, setTask] = useState("");
+  const [desc, setDesc] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [numOfSprints, setNumOfSprints] = useState("");
+  const [lenOfSprints, setLenOfSprints] = useState("");
   const [numOfPeople, setNumOfPeople] = useState(0);
 
   function onButtonClick(evt: MouseEvent<HTMLButtonElement>) {
-    // const details: ScrumAIDetails = 
+    // const details: ScrumAIDetails =
   }
   function doTaskChange(evt: ChangeEvent<HTMLInputElement>) {
     setTask(evt.target.value);
