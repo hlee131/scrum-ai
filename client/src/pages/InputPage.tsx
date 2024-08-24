@@ -152,10 +152,10 @@ export default function InputPage({
         </button>
       </div>
       <div className="container-right">
-        <h4>Add People</h4>
+        <h3>Add People</h3>
         {persons.map((person, index) => (
           <div>
-            <label htmlFor="Person">Person Name: </label>
+            <label htmlFor="Person">Person Name {index + 1}: </label>
             <input
               className="box"
               type="text"
@@ -163,8 +163,7 @@ export default function InputPage({
               onChange={(event) => doPersonChange(event, index)}
               value={person.name}
             ></input>
-            <br></br>
-            <label htmlFor="Position">Position: </label>
+            <label htmlFor="Position">Position {index + 1}: </label>
             <input
               className="box"
               type="number"
