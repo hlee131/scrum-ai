@@ -6,11 +6,31 @@
 
 .container-left {
     /* justify-content: left; */
+    padding: 5px;
     text-align: left;
-    justify-self: left;
     align-items: left;
+    justify-self: end;
+    width: 50%;
+    height: 100%;
+    border-right: solid 2px black;
 }
 
 .container-right {
-    
+    padding: 5px;
+    text-align: left;
+    align-items: left;
+    justify-self: end;
+    width: 50%;
+    height: 100%;
+}
+
+.output {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
 }
