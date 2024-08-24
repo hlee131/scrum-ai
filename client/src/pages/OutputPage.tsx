@@ -10,7 +10,17 @@ function join(...classes: string[]) {
   return classes.join(" ");
 }
 
-export default function OutputPage() {
+interface Event {
+  title: string;
+  description: string;
+  start: string;
+  end: string;
+  dependencies: string[];
+}
+
+export type Schedule = Event[];
+
+export default function OutputPage({ schedule }: { schedule: Schedule }) {
   return (
     <div className={styles.outputPage}>
       <div className={styles.left}>
