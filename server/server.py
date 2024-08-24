@@ -72,5 +72,38 @@ def plan_calendar():
     return jsonify(response.text)
 
 
+def add_team():
+    data = request.json
+    task_name = data['task_name']
+    task_description = data['task_description']
+    deadline = data['deadline']
+    num_sprints = data['num_sprints']
+    specifics = data.get('specifics', '')
+
+    # Construct the prompt for the AI
+    prompt = f"""
+    Plan a Scrum sprint for the following task:
+    Task Name: {task_name}
+    Description: {task_description}
+    Deadline: {deadline}
+    Number of Sprints: {num_sprints}
+    Additional Specifics: {specifics}
+
+    Please provide a detailed plan with subtasks, estimated durations, and dependencies. 
+    Format the output as a list of JSON objects, each representing a subtask with the following structure:
+    {{
+        "title": "Subtask name",
+        "description": "Brief description",
+        "start": "YYYY-MM-DD",
+        "end": "YYYY-MM-DD",
+        "dependencies": ["Subtask 1", "Subtask 2"]
+    }}
+    """
+
+    # Get response from OctoAI
+    response = llm.complete(prompt)
+    
+    return jsonify(response.text)
+
 if __name__ == '__main__':
     app.run(debug=True)
