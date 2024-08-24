@@ -27,7 +27,8 @@ function App() {
   return (
     <>
       {loading && (
-        <div>
+        <div className={styles.spinner}>
+          Generating schedule...
           <span className={styles.loader}></span>
         </div>
       )}
