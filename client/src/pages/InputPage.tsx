@@ -16,21 +16,15 @@ export type ScrumAIDetails = {
   lenOfSprints: string;
   people: Person[];
 };
-export default function InputPage({
-  onSubmit,
-}: {
-  onSubmit: (d: ScrumAIDetails) => void;
-}) {
+export default function InputPage({ onSubmit }: { onSubmit: (d: ScrumAIDetails) => void}) {
   const [task, setTask] = useState("");
   const [desc, setDesc] = useState("");
   const [deadline, setDeadline] = useState("");
   const [numOfSprints, setNumOfSprints] = useState("");
   const [lenOfSprints, setLenOfSprints] = useState("");
-  const [numOfPeople, setNumOfPeople] = useState(0);
+  // const [person, setPerson] = useState(0);
+  const [persons, setPersons] = useState<Person[]>([]);
 
-  function onButtonClick(evt: MouseEvent<HTMLButtonElement>) {
-    // const details: ScrumAIDetails =
-  }
   function doTaskChange(evt: ChangeEvent<HTMLInputElement>) {
     setTask(evt.target.value);
   }
@@ -46,6 +40,46 @@ export default function InputPage({
   function doLengthOfSprintsChange(evt: ChangeEvent<HTMLInputElement>) {
     setLenOfSprints(evt.target.value);
   }
+  function doPersonChange(evt: ChangeEvent<HTMLInputElement>, index: number) {
+    setPersons(prev => {
+      const newPersons = [...prev];
+      newPersons[index].name = evt.target.value;
+      return newPersons
+    })
+    // const newPersons = persons.map((person, i) => {
+    //   if (i === index) {
+    //     return {name: evt.target.value, position: persons[i].position};
+    //   } else {
+    //     return person;
+    //   }
+    // });
+    // setPersons(newPersons);
+  }
+
+  function doPositionChange(evt: ChangeEvent<HTMLInputElement>, index: number) {
+    setPersons(prev => {
+      const newPersons = [...prev];
+      newPersons[index].position = evt.target.value;
+      return newPersons
+    })
+    // const newPersons = persons.map((person, i) => {
+    //   if (i === index) {
+    //     return {name: evt.target.value, position: persons[i].position};
+    //   } else {
+    //     return person;
+    //   }
+    // });
+    // setPersons(newPersons);
+  }
+
+  // function addPeople() {
+  //   setPersons([...persons, <div><label htmlFor="Person">Person Name: </label>
+  //     <input style={{'border':'solid 2px grey'}}type="text" id="event" onChange={doPersonChange}></input>
+  //     <br></br>
+  //     <label htmlFor="Position">Position: </label>
+  //     <input style={{'border':'solid 2px grey'}} type="number" id="event" onChange={doPositionChange}></input></div>])
+  // }
+  
   return <div className="output">
     <div className="container-left">
       <div className="blo">
@@ -69,19 +103,24 @@ export default function InputPage({
           <input className="box" type="number" id="event" value="1" onChange={doLengthOfSprintsChange}></input>
           
       </div>
-      <button className="add" type="submit" onClick={() => onSubmit}>Submit</button>
-      </div>
+      <button className="add" type="submit" onClick={() => onSubmit({task: task, desc: desc, deadline: deadline, numOfSprints: numOfSprints, lenOfSprints: lenOfSprints, people: persons })}>Submit</button>
       <div className="container-right">
-        <h2 className="secondary">Add People</h2>
-        <div className="boxes">
-        <label htmlFor="Person">Person Name: </label>
-        <input className="box" type="text" id="event" onChange={doDeadlineChange}></input>
+        <h4>Add People</h4>
+        {persons.map((person, index)=> <div>
+    <label htmlFor="Person">Person Name: </label>
+      <input className="box" type="text" id="event" onChange={(event) => doPersonChange(event, index)} value={person.name}></input>
+      <br></br>
+      <label htmlFor="Position">Position: </label>
+      <input className="box" type="number" id="event" onChange={(event) => doPositionChange(event, index)} value={person.position}></input>
+  </div>)}
+        <button className="add"
         
-        <label htmlFor="Position">Position: </label>
-        <input className="box" type="number" id="event" onChange={doNumberOfSprintsChange}></input>
-        <button className="add">Add Person</button>
-        </div>
+        onClick={() => setPersons((prev) => [...prev, {name: "", position: ""}])}
+      >
+        Add Person
+      </button>
       </div>
+    </div>
     </div>
   ;
 }
