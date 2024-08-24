@@ -4,6 +4,7 @@ import os
 import json
 from llama_index.llms.openai_like import OpenAILike
 from flask_cors import CORS, cross_origin
+from datetime import datetime
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -34,6 +35,7 @@ def plan_calendar():
     num_sprints = data['numOfSprints']
     specifics = data.get('desc', '')
     team_members = data.get('people', [])
+    today = datetime.today().strftime('%Y-%m-%d')
 
     # Construct the prompt for the AI
     prompt = f"""
@@ -45,7 +47,7 @@ def plan_calendar():
     Additional Specifics: {specifics}
     Team Members: {json.dumps(team_members)}
 
-    Please provide a detailed plan with subtasks, estimated durations, dependencies, assigned team members, and story points starting from today to the next {{deadline}} weeks. 
+    Please provide a detailed plan with subtasks, estimated durations, dependencies, assigned team members, and story points starting from {today} to the next {deadline} weeks. 
     Provide a TypeScript array that matches the following type:
     {{
         "title": string,
@@ -58,7 +60,7 @@ def plan_calendar():
     }}[]
     where:
     - "title" is the subtask name
-    - "description" is the description of the subtask, MAKE SURE THIS IS AT LEAST 100 words.
+    - "description" is the description of the subtask.
     - "start" is the start date of the subtask in the format "YYYY-MM-DD"  
     - "end" is the end date of the subtask in the format "YYYY-MM-DD"
     - "dependencies" are the names of the subtasks that this subtask depends on
