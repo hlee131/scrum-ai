@@ -23,9 +23,9 @@ export default function InputPage({
 }) {
   const [task, setTask] = useState("");
   const [desc, setDesc] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState(10);
   const [numOfSprints, setNumOfSprints] = useState("");
-  const [lenOfSprints, setLenOfSprints] = useState("");
+  const [lenOfSprints, setLenOfSprints] = useState(1);
   // const [person, setPerson] = useState(0);
   const [persons, setPersons] = useState<Person[]>([]);
 
@@ -184,4 +184,4 @@ export default function InputPage({
       </div>
     </div>
   );
-}
+x}
