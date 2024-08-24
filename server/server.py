@@ -52,10 +52,10 @@ def plan_calendar():
     Please provide a detailed plan with subtasks, estimated durations, and dependencies. 
     Format the output as a list of JSON objects, each representing a subtask with the following structure:
     {{
-        "name": "Subtask name",
+        "title": "Subtask name",
         "description": "Brief description",
-        "start_date": "YYYY-MM-DD",
-        "end_date": "YYYY-MM-DD",
+        "start": "YYYY-MM-DD",
+        "end": "YYYY-MM-DD",
         "dependencies": ["Subtask 1", "Subtask 2"]
     }}
     """
@@ -63,36 +63,7 @@ def plan_calendar():
     # Get response from OctoAI
     response = llm.complete(prompt)
 
-    # Process the AI response (you might need to parse the JSON from the response text)
-    # This is a placeholder - you'll need to implement proper parsing based on the actual response format
-    tasks = parse_ai_response(response.text)
-
-    # Generate ICS file
-    calendar = generate_ics(tasks)
-
-    return jsonify({
-        "ics_content": calendar.serialize(),
-        "tasks": tasks
-    })
-
-def parse_ai_response(response_text):
-    # Implement parsing logic here
-    # This is a placeholder - you'll need to adapt this based on the actual AI output
-    import json
-    return json.loads(response_text)
-
-# def generate_ics(tasks):
-#     calendar = ics.Calendar()
-#     for task in tasks:
-#         event = ics.Event()
-#         event.name = task['name']
-#         event.begin = task['start_date']
-#         event.end = task['end_date']
-#         event.description = task['description']
-#         calendar.events.add(event)
-#     return calendar
-
-
+    return response
 
 
 if __name__ == '__main__':
