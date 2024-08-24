@@ -41,7 +41,7 @@ def plan_calendar():
     Additional Specifics: {specifics}
     Team Members: {json.dumps(team_members)}
 
-    Please provide a detailed plan with subtasks, estimated durations, dependencies, assigned team members, and story points. 
+    Please provide a detailed plan with subtasks, estimated durations, dependencies, assigned team members, and story points starting from today to the next {{deadline}} weeks. 
     Provide a TypeScript array that matches the following type:
     {{
         "title": string,
@@ -55,7 +55,7 @@ def plan_calendar():
     where:
     - "title" is the subtask name
     - "description" is the description of the subtask, MAKE SURE THIS IS AT LEAST 100 words.
-    - "start" is the start date of the subtask in the format "YYYY-MM-DD"
+    - "start" is the start date of the subtask in the format "YYYY-MM-DD"  
     - "end" is the end date of the subtask in the format "YYYY-MM-DD"
     - "dependencies" are the names of the subtasks that this subtask depends on
     - "assignee" is the name of the team member assigned to this subtask
