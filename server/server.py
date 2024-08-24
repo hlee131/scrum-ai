@@ -1,17 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from dotenv import load_dotenv
 import os
-from datetime import datetime, timedelta
-from llama_index.core import (
-    SimpleDirectoryReader,
-    VectorStoreIndex,
-    StorageContext,
-    load_index_from_storage,
-)
-from llama_index.core.tools import QueryEngineTool, ToolMetadata
-from llama_index.embeddings.octoai import OctoAIEmbedding
-from llama_index.core import Settings as LlamaGlobalSettings
-from llama_index.core.agent import ReActAgent
+import json
 from llama_index.llms.openai_like import OpenAILike
 
 app = Flask(__name__)
@@ -30,13 +20,6 @@ llm = OpenAILike(
     is_chat_model=True,
 )
 
-# {
-#     "task_name": "Test",
-#     "task_description": "Add tests for the entire project",
-#     "deadline": "September 9th, 2024",
-#     "num_sprints": "10"
-# }
-
 @app.route('/plan_calendar', methods=['POST'])
 def plan_calendar():
     data = request.json
@@ -45,6 +28,7 @@ def plan_calendar():
     deadline = data['deadline']
     num_sprints = data['num_sprints']
     specifics = data.get('specifics', '')
+    team_members = data.get('team_members', [])
 
     # Construct the prompt for the AI
     prompt = f"""
@@ -54,61 +38,40 @@ def plan_calendar():
     Deadline: {deadline}
     Number of Sprints: {num_sprints}
     Additional Specifics: {specifics}
+    Team Members: {json.dumps(team_members)}
 
-    Please provide a detailed plan with subtasks, estimated durations, and dependencies. 
+    Please provide a detailed plan with subtasks, estimated durations, dependencies, assigned team members, and story points. 
     Provide a TypeScript array that matches the following type:
     {{
         "title": string,
         "description": string,
         "start": string,
         "end": string,
-        "dependencies": string[]
+        "dependencies": string[],
+        "assignee": string,
+        "storyPoints": number
     }}[]
-    where "title" is the subtask name, "description" is the description of the subtask,
-    "start" is the start date of the subtask in the format "YYYY-MM-DD", "end" is the 
-    end date of the subtask in the format "YYYY-MM-DD", and "dependencies" are 
-    the names of the subtasks that the subtask depends on.
+    where:
+    - "title" is the subtask name
+    - "description" is the description of the subtask
+    - "start" is the start date of the subtask in the format "YYYY-MM-DD"
+    - "end" is the end date of the subtask in the format "YYYY-MM-DD"
+    - "dependencies" are the names of the subtasks that this subtask depends on
+    - "assignee" is the name of the team member assigned to this subtask
+    - "storyPoints" is the estimated effort for the subtask (using the Fibonacci sequence: 1, 2, 3, 5, 8, 13, 21)
 
-    Apart from the Typescript array, provide no other output and do not use any Markdown syntax. 
+    Ensure that:
+    1. Tasks are distributed evenly among team members based on their roles and the nature of the tasks.
+    2. The total story points per sprint are balanced, considering the team's capacity.
+    3. Dependencies between tasks are logically structured.
+    4. The plan fits within the given number of sprints and meets the deadline.
+
+    Apart from the TypeScript array, provide no other output and do not use any Markdown syntax.
     """
 
     # Get response from OctoAI
     response = llm.complete(prompt)
 
-    return jsonify(response.text)
-
-
-def add_team():
-    data = request.json
-    task_name = data['task_name']
-    task_description = data['task_description']
-    deadline = data['deadline']
-    num_sprints = data['num_sprints']
-    specifics = data.get('specifics', '')
-
-    # Construct the prompt for the AI
-    prompt = f"""
-    Plan a Scrum sprint for the following task:
-    Task Name: {task_name}
-    Description: {task_description}
-    Deadline: {deadline}
-    Number of Sprints: {num_sprints}
-    Additional Specifics: {specifics}
-
-    Please provide a detailed plan with subtasks, estimated durations, and dependencies. 
-    Format the output as a list of JSON objects, each representing a subtask with the following structure:
-    {{
-        "title": "Subtask name",
-        "description": "Brief description",
-        "start": "YYYY-MM-DD",
-        "end": "YYYY-MM-DD",
-        "dependencies": ["Subtask 1", "Subtask 2"]
-    }}
-    """
-
-    # Get response from OctoAI
-    response = llm.complete(prompt)
-    
     return jsonify(response.text)
 
 if __name__ == '__main__':
