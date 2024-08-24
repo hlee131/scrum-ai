@@ -23,9 +23,9 @@ export default function InputPage({
 }) {
   const [task, setTask] = useState("");
   const [desc, setDesc] = useState("");
-  const [deadline, setDeadline] = useState(10);
+  const [deadline, setDeadline] = useState("10");
   const [numOfSprints, setNumOfSprints] = useState("");
-  const [lenOfSprints, setLenOfSprints] = useState(1);
+  const [lenOfSprints, setLenOfSprints] = useState("1");
   // const [person, setPerson] = useState(0);
   const [persons, setPersons] = useState<Person[]>([]);
 
@@ -113,7 +113,6 @@ export default function InputPage({
             className="box"
             type="text"
             id="event"
-            value="10"
             onChange={doDeadlineChange}
           ></input>
 
@@ -130,7 +129,6 @@ export default function InputPage({
             className="box"
             type="number"
             id="event"
-            value="1"
             onChange={doLengthOfSprintsChange}
           ></input>
         </div>
@@ -193,4 +191,4 @@ export default function InputPage({
       </div>
     </div>
   );
-x}
+}
