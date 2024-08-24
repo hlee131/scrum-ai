@@ -1,0 +1,7 @@
+flask
+python-dotenv
+llama-index
+llama-index-llms-openai-like
+llama-index-embeddings-octoai
+ics
+octoai
