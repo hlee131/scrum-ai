@@ -56,19 +56,25 @@ def plan_calendar():
     Additional Specifics: {specifics}
 
     Please provide a detailed plan with subtasks, estimated durations, and dependencies. 
-    Format the output as a list of JSON objects, each representing a subtask with the following structure:
+    Provide a TypeScript array that matches the following type:
     {{
-        "title": "Subtask name",
-        "description": "Brief description",
-        "start": "YYYY-MM-DD",
-        "end": "YYYY-MM-DD",
-        "dependencies": ["Subtask 1", "Subtask 2"]
-    }}
+        "title": string,
+        "description": string,
+        "start": string,
+        "end": string,
+        "dependencies": string[]
+    }}[]
+    where "title" is the subtask name, "description" is the description of the subtask,
+    "start" is the start date of the subtask in the format "YYYY-MM-DD", "end" is the 
+    end date of the subtask in the format "YYYY-MM-DD", and "dependencies" are 
+    the names of the subtasks that the subtask depends on.
+
+    Apart from the Typescript array, provide no other output and do not use any Markdown syntax. 
     """
 
     # Get response from OctoAI
     response = llm.complete(prompt)
-    
+
     return jsonify(response.text)
 
 
