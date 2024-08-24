@@ -1,8 +1,8 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 
-import logoUrl from "../assets/image.jpg"
+import logoUrl from "../assets/image.jpg";
 
-import '../styles/InputPage.css'
+import "../styles/InputPage.css";
 
 export type Person = {
   name: string;
@@ -16,7 +16,11 @@ export type ScrumAIDetails = {
   lenOfSprints: string;
   people: Person[];
 };
-export default function InputPage({ onSubmit }: { onSubmit: (d: ScrumAIDetails) => void}) {
+export default function InputPage({
+  onSubmit,
+}: {
+  onSubmit: (d: ScrumAIDetails) => void;
+}) {
   const [task, setTask] = useState("");
   const [desc, setDesc] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -41,11 +45,11 @@ export default function InputPage({ onSubmit }: { onSubmit: (d: ScrumAIDetails) 
     setLenOfSprints(evt.target.value);
   }
   function doPersonChange(evt: ChangeEvent<HTMLInputElement>, index: number) {
-    setPersons(prev => {
+    setPersons((prev) => {
       const newPersons = [...prev];
       newPersons[index].name = evt.target.value;
-      return newPersons
-    })
+      return newPersons;
+    });
     // const newPersons = persons.map((person, i) => {
     //   if (i === index) {
     //     return {name: evt.target.value, position: persons[i].position};
@@ -57,11 +61,11 @@ export default function InputPage({ onSubmit }: { onSubmit: (d: ScrumAIDetails) 
   }
 
   function doPositionChange(evt: ChangeEvent<HTMLInputElement>, index: number) {
-    setPersons(prev => {
+    setPersons((prev) => {
       const newPersons = [...prev];
       newPersons[index].position = evt.target.value;
-      return newPersons
-    })
+      return newPersons;
+    });
     // const newPersons = persons.map((person, i) => {
     //   if (i === index) {
     //     return {name: evt.target.value, position: persons[i].position};
@@ -79,48 +83,106 @@ export default function InputPage({ onSubmit }: { onSubmit: (d: ScrumAIDetails) 
   //     <label htmlFor="Position">Position: </label>
   //     <input style={{'border':'solid 2px grey'}} type="number" id="event" onChange={doPositionChange}></input></div>])
   // }
-  
-  return <div className="output">
-    <div className="container-left">
-      <div className="blo">
-        <img src={logoUrl}></img>
-        <h3>Scrum AI</h3>
-      </div>
-      <div className="boxes">
-        <label htmlFor="Task">Task: </label>
-          <input className="box" type="text" id="event" onChange={doTaskChange}></input>
-          
+
+  return (
+    <div className="output">
+      <div className="container-left">
+        <div className="blo">
+          <img src={logoUrl}></img>
+          <h3>Scrum AI</h3>
+        </div>
+        <div className="boxes">
+          <label htmlFor="Task">Task: </label>
+          <input
+            className="box"
+            type="text"
+            id="event"
+            onChange={doTaskChange}
+          ></input>
+
           <label htmlFor="Description">Description: </label>
-          <input className="box" type="text" id="event" onChange={doDescChange}></input>
-          
+          <input
+            className="box"
+            type="text"
+            id="event"
+            onChange={doDescChange}
+          ></input>
+
           <label htmlFor="Deadline">Deadline (weeks): </label>
-          <input className="box"type="text" id="event" value="10"  onChange={doDeadlineChange}></input>
-          
+          <input
+            className="box"
+            type="text"
+            id="event"
+            value="10"
+            onChange={doDeadlineChange}
+          ></input>
+
           <label htmlFor="numOfSprints">Number of Sprints: </label>
-          <input className="box" type="number" id="event" onChange={doNumberOfSprintsChange}></input>
-          
+          <input
+            className="box"
+            type="number"
+            id="event"
+            onChange={doNumberOfSprintsChange}
+          ></input>
+
           <label htmlFor="lenOfSprints">Length of Sprints (weeks): </label>
-          <input className="box" type="number" id="event" value="1" onChange={doLengthOfSprintsChange}></input>
-          
+          <input
+            className="box"
+            type="number"
+            id="event"
+            value="1"
+            onChange={doLengthOfSprintsChange}
+          ></input>
+        </div>
+        <button
+          className="add"
+          type="submit"
+          onClick={() =>
+            onSubmit({
+              task: task,
+              desc: desc,
+              deadline: deadline,
+              numOfSprints: numOfSprints,
+              lenOfSprints: lenOfSprints,
+              people: persons,
+            })
+          }
+        >
+          Submit
+        </button>
       </div>
-      <button className="add" type="submit" onClick={() => onSubmit({task: task, desc: desc, deadline: deadline, numOfSprints: numOfSprints, lenOfSprints: lenOfSprints, people: persons })}>Submit</button>
       <div className="container-right">
         <h4>Add People</h4>
-        {persons.map((person, index)=> <div>
-    <label htmlFor="Person">Person Name: </label>
-      <input className="box" type="text" id="event" onChange={(event) => doPersonChange(event, index)} value={person.name}></input>
-      <br></br>
-      <label htmlFor="Position">Position: </label>
-      <input className="box" type="number" id="event" onChange={(event) => doPositionChange(event, index)} value={person.position}></input>
-  </div>)}
-        <button className="add"
-        
-        onClick={() => setPersons((prev) => [...prev, {name: "", position: ""}])}
-      >
-        Add Person
-      </button>
+        {persons.map((person, index) => (
+          <div>
+            <label htmlFor="Person">Person Name: </label>
+            <input
+              className="box"
+              type="text"
+              id="event"
+              onChange={(event) => doPersonChange(event, index)}
+              value={person.name}
+            ></input>
+            <br></br>
+            <label htmlFor="Position">Position: </label>
+            <input
+              className="box"
+              type="number"
+              id="event"
+              onChange={(event) => doPositionChange(event, index)}
+              value={person.position}
+            ></input>
+          </div>
+        ))}
+        <button
+          className="add"
+          onClick={() =>
+            setPersons((prev) => [...prev, { name: "", position: "" }])
+          }
+        >
+          Add Person
+        </button>
       </div>
     </div>
-    </div>
-  ;
+  );
 }
