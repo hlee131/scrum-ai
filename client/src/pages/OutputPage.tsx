@@ -17,6 +17,7 @@ interface Event {
   end: string;
   dependencies: string[];
   assignee: string;
+  storyPoints: number;
 }
 
 export type Schedule = Event[];
@@ -28,6 +29,15 @@ export default function OutputPage({
   schedule: Schedule;
   description: string;
 }) {
+
+  const tasksByAssignee = schedule.reduce((acc, task) => {
+    if (!acc[task.assignee]) {
+      acc[task.assignee] = [];
+    }
+    acc[task.assignee].push(task);
+    return acc;
+  }, {} as Record<string, Event[]>);
+
   return (
     <div className={styles.outputPage}>
       <div className={styles.left}>
@@ -36,18 +46,30 @@ export default function OutputPage({
           <div className={styles.scrollableContent}>{description}</div>
         </div>
         <div className={join(styles.bottom, styles.columnLayout)}>
-          <h1>Sprint Tasks (List View)</h1>
+          <h1>Tasks by Person</h1>
           <div className={styles.scrollableContent}>
-            <ul>
-              {schedule.map((task) => (
-                <li>
-                  <b>
-                    {task.start} - {task.end}
-                  </b>
-                  : {task.title}
-                </li>
-              ))}
-            </ul>
+            {Object.entries(tasksByAssignee).map(([assignee, tasks]) => (
+              <div key={assignee} className={styles.assigneeSection}>
+                <h2>{assignee}</h2>
+                <ul>
+                  {tasks.map((task, index) => (
+                    <li key={index}>
+                      <b>{task.title}</b> ({task.start} - {task.end})
+                      <br />
+                      Description: {task.description}
+                      <br />
+                      Story Points: {task.storyPoints}
+                      {task.dependencies.length > 0 && (
+                        <>
+                          <br />
+                          Dependencies: {task.dependencies.join(", ")}
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </div>
