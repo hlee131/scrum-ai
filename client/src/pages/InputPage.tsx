@@ -1,5 +1,3 @@
-function InputPage() {
+export default function InputPage() {
   return <></>;
 }
-
-export default InputPage;
