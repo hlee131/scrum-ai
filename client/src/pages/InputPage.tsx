@@ -173,14 +173,23 @@ export default function InputPage({
             ></input>
           </div>
         ))}
-        <button
+        <div className="buttons"><button
           className="add"
           onClick={() =>
             setPersons((prev) => [...prev, { name: "", position: "" }])
           }
         >
-          Add Person
+        Add Person
         </button>
+        <button
+          className="add"
+          onClick={() =>
+            setPersons((prev) => prev.slice(0, -1))
+          }
+        >
+        Delete Person
+        </button>
+        </div>
       </div>
     </div>
   );
