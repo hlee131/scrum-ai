@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
-import ics
 from datetime import datetime, timedelta
 from llama_index.core import (
     SimpleDirectoryReader,
@@ -30,6 +29,13 @@ llm = OpenAILike(
     is_function_calling_model=True,
     is_chat_model=True,
 )
+
+# {
+#     "task_name": "Test",
+#     "task_description": "Add tests for the entire project",
+#     "deadline": "September 9th, 2024",
+#     "num_sprints": "10"
+# }
 
 @app.route('/plan_calendar', methods=['POST'])
 def plan_calendar():
@@ -62,8 +68,8 @@ def plan_calendar():
 
     # Get response from OctoAI
     response = llm.complete(prompt)
-
-    return response
+    
+    return jsonify(response.text)
 
 
 if __name__ == '__main__':
