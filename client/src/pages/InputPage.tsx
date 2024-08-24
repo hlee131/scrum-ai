@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import logoUrl from "../assets/image.jpg";
 
