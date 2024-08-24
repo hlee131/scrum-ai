@@ -13,7 +13,7 @@ function App() {
 
   function onSubmit(data: ScrumAIDetails) {
     setLoading(true);
-    fetch(`http://localhost:10000/plan_calendar`, {
+    fetch(`https://scrum-ai.onrender.com/plan_calendar`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
