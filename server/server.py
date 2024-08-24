@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import os
 import ics
 from datetime import datetime, timedelta
-from flask import Flask
 from llama_index.core import (
     SimpleDirectoryReader,
     VectorStoreIndex,
@@ -32,8 +31,8 @@ llm = OpenAILike(
     is_chat_model=True,
 )
 
-@app.route('/plan_sprint', methods=['POST'])
-def plan_sprint():
+@app.route('/plan_calendar', methods=['POST'])
+def plan_calendar():
     data = request.json
     task_name = data['task_name']
     task_description = data['task_description']
@@ -82,16 +81,19 @@ def parse_ai_response(response_text):
     import json
     return json.loads(response_text)
 
-def generate_ics(tasks):
-    calendar = ics.Calendar()
-    for task in tasks:
-        event = ics.Event()
-        event.name = task['name']
-        event.begin = task['start_date']
-        event.end = task['end_date']
-        event.description = task['description']
-        calendar.events.add(event)
-    return calendar
+# def generate_ics(tasks):
+#     calendar = ics.Calendar()
+#     for task in tasks:
+#         event = ics.Event()
+#         event.name = task['name']
+#         event.begin = task['start_date']
+#         event.end = task['end_date']
+#         event.description = task['description']
+#         calendar.events.add(event)
+#     return calendar
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
