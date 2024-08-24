@@ -27,3 +27,4 @@ server/venv
 
 .venv
 */.env
+server/node_modules
