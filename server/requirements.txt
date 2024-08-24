@@ -4,3 +4,4 @@ llama-index
 llama-index-llms-openai-like
 llama-index-embeddings-octoai
 octoai
+gunicorn
