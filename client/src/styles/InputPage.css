@@ -1,4 +1,4 @@
-* {
+*:not(.rbc-event):not(.rbc-event-content) {
   background-color: white;
 }
 
@@ -98,12 +98,12 @@ h2 {
 } */
 
 .add {
-  background-color: #2596be;
+  background-color: #2596be !important;
   border-radius: 1px #3c4f65;
   color: white;
   width: 50%;
+  margin: 1em;
 }
-
 
 .secondary {
   padding-top: 5%;
