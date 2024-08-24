@@ -3,6 +3,8 @@ import "./App.css";
 import InputPage, { ScrumAIDetails } from "./pages/InputPage";
 import OutputPage, { Schedule } from "./pages/OutputPage";
 
+import styles from "./styles/App.module.css";
+
 function App() {
   const [page, setPage] = useState<number>(0);
   const [generatedSchedule, setGeneratedSchedule] = useState<Schedule>([]);
@@ -24,7 +26,11 @@ function App() {
 
   return (
     <>
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <div>
+          <span className={styles.loader}></span>
+        </div>
+      )}
       {page === 0 && !loading ? (
         <InputPage onSubmit={onSubmit} />
       ) : (
