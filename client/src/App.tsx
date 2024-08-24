@@ -9,16 +9,18 @@ function App() {
   const [page, setPage] = useState<number>(0);
   const [generatedSchedule, setGeneratedSchedule] = useState<Schedule>([]);
   const [loading, setLoading] = useState(false);
+  const [desc, setDesc] = useState("");
 
   function onSubmit(data: ScrumAIDetails) {
     setLoading(true);
-    fetch(`${import.meta.env.BACKEND_URL}/plan_calendar`, {
+    fetch(`http://localhost:10000/plan_calendar`, {
       method: "POST",
       body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
     }).then((res) => {
       res
         .json()
-        .then((json) => setGeneratedSchedule(json))
+        .then((json) => setGeneratedSchedule(JSON.parse(json)))
         .then(() => setPage(1))
         .then(() => setLoading(false));
     });
@@ -33,9 +35,9 @@ function App() {
         </div>
       )}
       {page === 0 && !loading ? (
-        <InputPage onSubmit={onSubmit} />
+        <InputPage onSubmit={onSubmit} desc={desc} setDesc={setDesc} />
       ) : (
-        <OutputPage schedule={generatedSchedule} />
+        <OutputPage schedule={generatedSchedule} description={desc} />
       )}
     </>
   );

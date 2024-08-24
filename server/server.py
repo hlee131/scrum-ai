@@ -3,8 +3,11 @@ from dotenv import load_dotenv
 import os
 import json
 from llama_index.llms.openai_like import OpenAILike
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 
 # Load environment variables
 load_dotenv()
@@ -22,14 +25,15 @@ llm = OpenAILike(
 )
 
 @app.route('/plan_calendar', methods=['POST'])
+@cross_origin()
 def plan_calendar():
     data = request.json
-    task_name = data['task_name']
-    task_description = data['task_description']
+    task_name = data['task']
+    task_description = data['desc']
     deadline = data['deadline']
-    num_sprints = data['num_sprints']
-    specifics = data.get('specifics', '')
-    team_members = data.get('team_members', [])
+    num_sprints = data['numOfSprints']
+    specifics = data.get('desc', '')
+    team_members = data.get('people', [])
 
     # Construct the prompt for the AI
     prompt = f"""

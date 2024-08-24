@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useState } from "react";
 
 import logoUrl from "../assets/image.jpg";
 
@@ -18,12 +18,15 @@ export type ScrumAIDetails = {
 };
 export default function InputPage({
   onSubmit,
+  desc,
+  setDesc,
 }: {
   onSubmit: (d: ScrumAIDetails) => void;
+  desc: string;
+  setDesc: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [task, setTask] = useState("");
-  const [desc, setDesc] = useState("");
-  const [deadline, setDeadline] = useState("10");
+  const [deadline, setDeadline] = useState("");
   const [numOfSprints, setNumOfSprints] = useState("");
   const [lenOfSprints, setLenOfSprints] = useState("1");
   // const [person, setPerson] = useState(0);
@@ -50,14 +53,6 @@ export default function InputPage({
       newPersons[index].name = evt.target.value;
       return newPersons;
     });
-    // const newPersons = persons.map((person, i) => {
-    //   if (i === index) {
-    //     return {name: evt.target.value, position: persons[i].position};
-    //   } else {
-    //     return person;
-    //   }
-    // });
-    // setPersons(newPersons);
   }
 
   function doPositionChange(evt: ChangeEvent<HTMLInputElement>, index: number) {
@@ -66,23 +61,7 @@ export default function InputPage({
       newPersons[index].position = evt.target.value;
       return newPersons;
     });
-    // const newPersons = persons.map((person, i) => {
-    //   if (i === index) {
-    //     return {name: evt.target.value, position: persons[i].position};
-    //   } else {
-    //     return person;
-    //   }
-    // });
-    // setPersons(newPersons);
   }
-
-  // function addPeople() {
-  //   setPersons([...persons, <div><label htmlFor="Person">Person Name: </label>
-  //     <input style={{'border':'solid 2px grey'}}type="text" id="event" onChange={doPersonChange}></input>
-  //     <br></br>
-  //     <label htmlFor="Position">Position: </label>
-  //     <input style={{'border':'solid 2px grey'}} type="number" id="event" onChange={doPositionChange}></input></div>])
-  // }
 
   return (
     <div className="output">
@@ -171,22 +150,21 @@ export default function InputPage({
             ></input>
           </div>
         ))}
-        <div className="buttons"><button
-          className="add"
-          onClick={() =>
-            setPersons((prev) => [...prev, { name: "", position: "" }])
-          }
-        >
-        Add Person
-        </button>
-        <button
-          className="add"
-          onClick={() =>
-            setPersons((prev) => prev.slice(0, -1))
-          }
-        >
-        Delete Person
-        </button>
+        <div className="buttons">
+          <button
+            className="add"
+            onClick={() =>
+              setPersons((prev) => [...prev, { name: "", position: "" }])
+            }
+          >
+            Add Person
+          </button>
+          <button
+            className="add"
+            onClick={() => setPersons((prev) => prev.slice(0, -1))}
+          >
+            Delete Person
+          </button>
         </div>
       </div>
     </div>

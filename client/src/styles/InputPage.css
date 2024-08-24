@@ -1,4 +1,4 @@
-* {
+*:not(.rbc-event):not(.rbc-event-content) {
   background-color: white;
 }
 
