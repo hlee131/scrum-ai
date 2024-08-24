@@ -1,0 +1,16 @@
+* {
+    background-color: antiquewhite;
+    color: black;
+    font-size: 30px;
+}
+
+.container-left {
+    /* justify-content: left; */
+    text-align: left;
+    justify-self: left;
+    align-items: left;
+}
+
+.container-right {
+    
+}
