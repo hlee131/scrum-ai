@@ -54,7 +54,7 @@ def plan_calendar():
     }}[]
     where:
     - "title" is the subtask name
-    - "description" is the description of the subtask
+    - "description" is the description of the subtask, MAKE SURE THIS IS AT LEAST 100 words.
     - "start" is the start date of the subtask in the format "YYYY-MM-DD"
     - "end" is the end date of the subtask in the format "YYYY-MM-DD"
     - "dependencies" are the names of the subtasks that this subtask depends on
