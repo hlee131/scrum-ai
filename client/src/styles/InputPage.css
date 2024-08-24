@@ -10,7 +10,7 @@
     justify-self: end;
     width: 50%;
     height: 100%;
-    border-right: solid 2px black;
+    border-right: solid 1px #3c4f65;
 }
 
 .container-right {
@@ -91,6 +91,9 @@ h2 {
 .add {
     margin-left: 40%;
     margin-top: 5%;
+    background-color: #2596be;
+    border-radius: 1px #3c4f65;
+    color: white;
 }
 
 .secondary {
