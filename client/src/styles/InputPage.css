@@ -1,7 +1,5 @@
 * {
-    background-color: antiquewhite;
-    color: black;
-    font-size: 30px;
+    background-color: white;
 }
 
 .container-left {
@@ -24,6 +22,12 @@
     height: 100%;
 }
 
+input, label {
+    display: block;
+
+    width: 35%;
+}
+
 .output {
     width: 100vw;
     height: 100vh;
@@ -33,4 +37,69 @@
     background-color: antiquewhite;
     display: flex;
     flex-direction: row;
+}
+
+.box {
+    border: solid 1px black;
+    border-radius: 0.5rem;
+    padding-top: 2%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black;
+}
+
+label {
+    color: #3c4f65;
+    font-size: 1rem;
+    float: left;
+}
+h3 {
+    color: #3c4f65;
+    font-size: x-large;
+}
+
+h2 {
+    color: #3c4f65;
+    font-size: large;
+}
+
+.blo {
+    display: flex;
+    
+}
+
+.blo img {
+    width: 12%;
+    height: 12%;
+    margin-left: 2%;
+}
+
+.blo h3 {
+    padding-left: 5%;
+}
+
+.boxes {
+    padding-top: 5%;
+    padding-left: 5%;
+
+}
+
+.add {
+    margin-left: 40%;
+    margin-top: 5%;
+}
+
+.secondary {
+    padding-top: 5%;
+    padding-left: 2%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
