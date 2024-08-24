@@ -1,3 +1,5 @@
-export default function OutputPage() {
+function OutputPage() {
   return <></>;
 }
+
+export default OutputPage;

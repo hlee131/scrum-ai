@@ -1,3 +1,5 @@
-export default function InputPage() {
+function InputPage() {
   return <></>;
 }
+
+export default InputPage;
