@@ -73,7 +73,7 @@ def plan_calendar():
     # Get response from OctoAI
     response = llm.complete(prompt)
 
-    return jsonify(response.text)
+    return json.dumps(response.text)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
