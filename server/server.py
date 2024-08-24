@@ -15,7 +15,8 @@ llm = OpenAILike(
     model="meta-llama-3.1-70b-instruct",
     api_base="https://text.octoai.run/v1",
     api_key=OCTOAI_API_KEY,
-    context_window=40000,
+    context_window=40000000000000000,
+    max_tokens=40000000000000000000,
     is_function_calling_model=True,
     is_chat_model=True,
 )
